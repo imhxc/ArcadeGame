@@ -36,6 +36,11 @@ var Player = function (x, y) {
 }
 // 这个类需要一个 update() 函数， render() 函数和一个 handleInput()函数
 Player.prototype.update = function () {
+    //
+    if (this.y <= -28) {
+        this.x = 202;
+        this.y = 83 * 4 + 55;
+    }
 
 };
 Player.prototype.render = function () {
