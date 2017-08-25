@@ -24,7 +24,6 @@ Enemy.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-
 // 现在实现你自己的玩家类
 var Player = function (x, y) {
     this.x = x;
@@ -32,19 +31,18 @@ var Player = function (x, y) {
     this.width = 101;
     this.height = 171;
     this.personImg = 'images/char-boy.png';
-
 }
 // 这个类需要一个 update() 函数， render() 函数和一个 handleInput()函数
 Player.prototype.update = function () {
-    //
+    //如果进入小河 则闯关成功 复位玩家
     if (this.y <= -28) {
-        this.x = 202;
-        this.y = 83 * 4 + 55;
+        this.initPlace();
     }
 
 };
 Player.prototype.render = function () {
     ctx.drawImage(Resources.get(this.personImg), this.x, this.y, this.width, this.height);
+
 };
 Player.prototype.handleInput = function (key) {
     switch (key) {
@@ -70,12 +68,17 @@ Player.prototype.handleInput = function (key) {
             break;
     }
 };
+//玩家复位函数封装
+Player.prototype.initPlace = function () {
+    this.x = playerInitPlace.x;
+    this.y = playerInitPlace.y;
+}
+
 // 碰撞检测
 Player.prototype.checkCollision = function (enemy) {
     if (this.y === enemy.y && this.x - enemy.x < 55 && (this.x - enemy.x) >= -55) {
         // 碰到敌人，玩家复位
-        this.x = 202;
-        this.y = 83 * 4 + 55;
+        this.initPlace();
     } else {
 
     }
@@ -83,18 +86,20 @@ Player.prototype.checkCollision = function (enemy) {
 
 
 // 现在实例化你的所有对象
-
-
 // 把所有敌人的对象都放进一个叫 allEnemies 的数组里面
 var allEnemies = [
-    new Enemy(0, 83 * 0 + 55, 90),
-    new Enemy(0, 83 * 1 + 55, 120),
-    new Enemy(0, 83 * 2 + 55, 140),
-    new Enemy(0, 83 * 3 + 55, 100)
+    new Enemy(0, 83 * 0 + 55, 280),
+    new Enemy(0, 83 * 1 + 55, 230),
+    new Enemy(0, 83 * 2 + 55, 370),
+    new Enemy(0, 83 * 3 + 55, 290),
+    new Enemy(-160, 83 * 0 + 55, 380),
+    new Enemy(-60, 83 * 1 + 55, 130)
 ];
 
 // 把玩家对象放进一个叫 player 的变量里面
-var player = new Player(202, 83 * 4 + 55);
+// 定义玩家初始位置
+var playerInitPlace = {x: 202, y: 83 * 4 + 55}
+var player = new Player(playerInitPlace.x, playerInitPlace.y);
 
 // 这段代码监听游戏玩家的键盘点击事件并且代表将按键的关键数字送到 Play.handleInput()
 // 方法里面。你不需要再更改这段代码了。
@@ -110,6 +115,6 @@ document.addEventListener('keyup', function (e) {
 });
 
 
-// 其他图片渲染
+
 
 
