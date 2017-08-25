@@ -1,0 +1,13 @@
+body {
+    text-align: center;
+}
+
+.map {
+
+}
+.map > .grass {
+    width:400px;
+    height:600px;
+    background-image: url('../images/grass-block.png');
+    background-repeat: repeat;
+}
